@@ -1,0 +1,114 @@
+body{
+  background: #555555;
+  height: 100vh;
+  color: white;
+
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*justify-content: center;*/
+}
+
+.grid{
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 3fr 1fr 4fr;
+}
+
+table.tabelaResultados {
+  border: 4px solid #FFFFFF;
+  background-color: #B0351E;
+  /*background-color: #555555;*/
+  width: 75%;
+  text-align: left;
+  border-collapse: collapse;
+
+  table-layout: fixed;
+  height:150px;
+  overflow-y: scroll;
+}
+table.tabelaResultados td, table.tabelaResultados th {
+  border: 1px solid #FFFFFF;
+  padding: 5px 10px;
+}
+table.tabelaResultados tbody td {
+  font-size: 12px;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+table.tabelaResultados td:nth-child(odd) {
+  width: 100px;
+}
+table.tabelaResultados td:nth-child(even) {
+  background: #B0351E;
+  /*background: #398AA4;*/
+}
+table.tabelaResultados tfoot td {
+  font-size: 13px;
+}
+table.tabelaResultados tfoot .links {
+  text-align: right;
+}
+table.tabelaResultados tfoot .links a{
+  display: inline-block;
+  background: #FFFFFF;
+  color: #B0351E;
+  /*color: #398AA4;*/
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+
+/*table.fixed {table-layout:fixed; width:90px;}!*Setting the table width is important!*!*/
+/*table.fixed td {overflow:hidden;}!*Hide text outside the cell.*!*/
+/*table.fixed td:nth-of-type(1) {width:20px;}!*Setting the width of column 1.*!*/
+/*table.fixed td:nth-of-type(2) {width:30px;}!*Setting the width of column 2.*!*/
+/*table.fixed td:nth-of-type(3) {width:40px;}!*Setting the width of column 3.*!*/
+
+:root {
+  /*--bs-link-color: #da4327;*/
+  /*--bs-link-hover-color: #B0351E;*/
+
+  --bs-link-color: #FFFFFF;
+  --bs-link-hover-color: #FFFFFF;
+}
+
+.pagination {
+  /*--bs-pagination-active-bg: #da4327;*/
+  /*--bs-pagination-active-border-color: #da4327;*/
+
+  --bs-pagination-bg: #555555;
+
+  --bs-pagination-disabled-color: #e26c56;
+  --bs-pagination-disabled-bg: #555555;
+
+  --bs-pagination-active-bg: #da4327;
+  --bs-pagination-active-border-color: #FFFFFF;
+
+  --bs-pagination-hover-color: #FFFFFF;
+  --bs-pagination-hover-bg: #B0351E;
+}
+
+.form-control:focus {
+  border-color: #da4327;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(218,67,39,0.6);
+}
+
+.form-select:focus {
+  border-color: #da4327;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(218,67,39,0.6);
+}
+
+.form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-color: transparent;
+  color: #FFFFFF;
+}
+
+.form-select:hover {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23000000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-color: #FFFFFF;
+  color: #000000;
+
+}
+
+/* solr logo color: #da4327 */
+/* background color: #555555 */

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Buscador{% endblock %}
+{% block content %}
+
+    <section class="grid">
+        <div class="text-center align-self-end mb-3">
+            <img src="{{ url_for('static', filename='images/solr-logo-white.png') }}" width="300">
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="mt-0 w-50">
+                <form class="d-flex w-auto" role="search" action="{{ url_for('search') }}" method="get">
+                    <select required class="form-select rounded-5 w-auto" name="core" aria-label="Default select example">
+                        <option value="" selected>Banco de Questões</option>
+                        <option value="enem2019">Enem2019</option>
+                        <option value="outros">Outros</option>
+                    </select>
+                    <input class="form-control mx-2 rounded-5 bg-transparent text-light" type="search" name="query" aria-label="Search" placeholder="campo:palavras-chave">
+                    <button class="btn btn-outline-light rounded-5" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <h3>Buscador de Enunciados com Solr</h3>
+        </div>
+    </section>
+
+{% endblock %}

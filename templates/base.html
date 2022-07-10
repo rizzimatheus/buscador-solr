@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type='image/png' href="{{ url_for('static', filename='images/solr-icon.png') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+</head>
+<body>
+
+    {% block navbar %}
+    {% endblock %}
+
+    {% for message in get_flashed_messages() %}
+        <div class="row no-gutters pt-2 px-2">
+            <div class="col-lg-auto col-md-auto me-auto">
+                <div class="alert alert-danger alert-dismissible fade show my-0" role="alert">
+                  <strong>ERRO!</strong> {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>
