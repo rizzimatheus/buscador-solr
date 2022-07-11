@@ -20,9 +20,11 @@ app = Flask(__name__)
 # app.config['SECRET_KEY'] = '000000000000'
 app.config['SECRET_KEY'] = os.environ.get("SOLR_FLASK_SECRET_KEY")
 
+
 @app.route('/', methods=["GET", "POST"])
 def index():
     return render_template("index.html")
+
 
 @app.route('/search', methods=["GET", "POST"])
 def search():
@@ -43,15 +45,11 @@ def search():
         response = requests.get(
             f"{SITE}/solr/{core}/select?indent=true&q.op=OR&q={query}&rows={per_page}&start={offset}"
         )
+        print(f"response code: {response.status_code}")
     except requests.ConnectionError:
         # Solr offline
         flash(MSG_SOLR_OFFLINE)
         return render_template("index.html")
-
-    print(f"response code: {response.status_code}")
-    print(f"response raw: {response.raw}")
-    print(f"response text: {response.text}")
-    print(f"response headers: {response.headers}")
 
     if(response.status_code == 404):
         # Core não encontrado no Solr
@@ -90,6 +88,7 @@ def search():
                            total=total,
                            )
 
+
 @app.route('/downlaod', methods=["GET", "POST"])
 def download_file():
     core = str(request.args.get("core"))
@@ -121,7 +120,6 @@ def download_file():
     total = message['response']['numFound']
     questions = message['response']['docs'][0]
     if total == 0:
-        print("Nenhuma questão encontrada")
         flash(MSG_ERROR_DOWNLOAD)
         return redirect(request.referrer)
     else:
@@ -130,7 +128,7 @@ def download_file():
 
     print(f"questions: {questions}")
     print(f"gabarito: {gabarito}")
-    print(fr"enunciado: {enunciado}")
+    print(f"enunciado: {enunciado}")
 
     data = ET.Element('quiz')
 
@@ -166,7 +164,7 @@ def download_file():
     file = TemporaryFile("w+b")
     file.write(b_xml)
     file.seek(0)
-    return send_file(file, as_attachment=True, attachment_filename="questao_moodle.xml")
+    return send_file(file, as_attachment=True, attachment_filename=f"DB_{doc_id}.xml")
 
 
 if __name__ == '__main__':
