@@ -9,12 +9,15 @@ from tempfile import TemporaryFile
 import xml.etree.ElementTree as ET
 import re
 
-SITE = "http://localhost:8983"
+# SITE = "http://localhost:8983"
+SITE = os.environ.get("SOLR_SITE")
+
 MSG_SOLR_OFFLINE = "Solr está fora do ar."
 MSG_ERROR_DOWNLOAD = "Não foi possível fazer download."
 MSG_ERROR_CORE = "Não foi possível encontrar o Banco de Questões selecionado."
 
 app = Flask(__name__)
+# app.config['SECRET_KEY'] = '000000000000'
 app.config['SECRET_KEY'] = os.environ.get("SOLR_FLASK_SECRET_KEY")
 
 @app.route('/', methods=["GET", "POST"])
