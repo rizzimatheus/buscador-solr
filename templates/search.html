@@ -33,8 +33,8 @@
                             <input type="hidden" name="core" value="{{ core }}">
                             <input type="hidden" name="tx_gabarito" value="{{ question['tx_gabarito'] }}">
                             <input type="hidden" name="doc_id" value="{{ question['id'] }}">
-                            <select class="form-select rounded-5 w-auto form-select-sm me-2" name="format" aria-label="Formato para download">
-                                <option value="moodle" selected>Formato</option>
+                            <select required class="form-select rounded-5 w-auto form-select-sm me-2" name="format" aria-label="Formato para download">
+                                <option value="" selected>Formato</option>
                                 <option value="moodle">Moodle</option>
                                 <option value="classroom" disabled>Classroom</option>
                             </select>
@@ -53,8 +53,8 @@
                 <form class="d-flex w-auto" role="search" action="{{ url_for('download_file') }}" method="get">
                     <input type="hidden" name="core" value="{{ core }}">
                     <input type="hidden" name="doc_id" value="{{ question['id'] }}">
-                    <select class="form-select rounded-5 w-auto form-select-sm me-2" name="format" aria-label="Formato para download">
-                        <option value="moodle" selected>Formato</option>
+                    <select required class="form-select rounded-5 w-auto form-select-sm me-2" name="format" aria-label="Formato para download">
+                        <option value="" selected>Formato</option>
                         <option value="moodle">Moodle</option>
                         <option value="classroom" disabled>Classroom</option>
                     </select>
