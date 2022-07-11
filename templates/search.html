@@ -21,7 +21,7 @@
             {%for field in question%}
                 <tr>
                     <td><b>{{ field }}:</b></td>
-                    <td><div style="max-height:250px; overflow:scroll"><span class="" style="white-space: pre-line;">{{ question[field] }}</span></div></td>
+                    <td><div style="max-height:250px; overflow: auto"><span class="" style="white-space: pre-line;">{{ question[field] }}</span></div></td>
                 </tr>
             {%endfor%}
 
