@@ -54,7 +54,7 @@ def search():
     page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
     per_page = 5
     offset = (page-1)*per_page
-    print(f'page: {page}\nper_page: {per_page}\noffset: {offset}')
+    # print(f'page: {page}\nper_page: {per_page}\noffset: {offset}')
 
     query = str(request.args.get("query"))
     if(not query):
@@ -62,13 +62,13 @@ def search():
         query = "*:*"
 
     core = str(request.args.get("core"))
-    print(f'core: {core}')
+    # print(f'core: {core}')
 
     try:
         response = requests.get(
             f"{SITE}/solr/{core}/select?indent=true&q.op=OR&q={query}&rows={per_page}&start={offset}"
         )
-        print(f"response code: {response.status_code}")
+        # print(f"response code: {response.status_code}")
     except requests.ConnectionError:
         # Solr offline
         flash(MSG_SOLR_OFFLINE)
@@ -80,7 +80,7 @@ def search():
         return redirect(request.referrer)
 
     message = response.json()
-    print(message)
+    # print(message)
 
     status = message['responseHeader']['status']
     if(status != 0 ):
@@ -111,7 +111,7 @@ def search():
                            per_page=per_page,
                            pagination=pagination,
                            total=total,
-                           options=options
+                           options=options,
                            )
 
 
@@ -119,7 +119,7 @@ def search():
 def download_file():
     core = str(request.args.get("core"))
     doc_id = str(request.args.get("doc_id"))
-    format = str(request.args.get("format"))
+    format = str(request.args.get("format")) # formato de download (moodle, classroom, ...)
 
     query = f"id:{doc_id}"
 
@@ -131,11 +131,11 @@ def download_file():
 
     message = response.json()
 
-    print("Download page")
-    print(f"core: {core}")
-    print(f"doc_id: {doc_id}")
-    print(f"format: {format}")
-    print(f"message: {message}")
+    # print("Download page")
+    # print(f"core: {core}")
+    # print(f"doc_id: {doc_id}")
+    # print(f"format: {format}")
+    # print(f"message: {message}")
 
     status = message['responseHeader']['status']
     if(status != 0):
@@ -149,12 +149,12 @@ def download_file():
         flash(MSG_ERROR_DOWNLOAD)
         return redirect(request.referrer)
     else:
-        gabarito = questions.pop("tx_gabarito", [None])[0]
+        gabarito = questions.pop("gabarito", [None])[0]
         enunciado = questions.pop("enunciado", [None])[0]
 
-    print(f"questions: {questions}")
-    print(f"gabarito: {gabarito}")
-    print(f"enunciado: {enunciado}")
+    # print(f"questions: {questions}")
+    # print(f"gabarito: {gabarito}")
+    # print(f"enunciado: {enunciado}")
 
     data = ET.Element('quiz')
 
@@ -163,11 +163,10 @@ def download_file():
 
     name = ET.SubElement(question, 'name')
     name_text = ET.SubElement(name, 'text')
-    n = re.findall("Quest[aã]o\s*\d{2,3}", enunciado)
-    name_text.text = n[0] if len(n) > 0 else "Questão 00"
+    name_text.text = questions.pop("numero", [None])[0]
 
     questiontext = ET.SubElement(question, 'questiontext')
-    questiontext.set('format', 'plain_text')
+    questiontext.set('format', 'moodle_auto_format')
     questiontext_text = ET.SubElement(questiontext, 'text')
     questiontext_text.text = enunciado
 
@@ -182,7 +181,7 @@ def download_file():
         answer = ET.SubElement(question, 'answer')
         answer.set('fraction', str(frac_ans[i]))
         answer_text = ET.SubElement(answer, 'text')
-        answer_text.text = i
+        answer_text.text = questions.pop(i.lower(), [None])[0]
 
     # Converting the xml data to byte object, for allowing flushing data to file stream
     b_xml = ET.tostring(data, encoding='UTF-8', xml_declaration=True)
@@ -190,7 +189,7 @@ def download_file():
     file = TemporaryFile("w+b")
     file.write(b_xml)
     file.seek(0)
-    return send_file(file, as_attachment=True, attachment_filename=f"DB_{doc_id}.xml")
+    return send_file(file, as_attachment=True, download_name=f"DB_{doc_id}.xml")
 
 
 if __name__ == '__main__':
