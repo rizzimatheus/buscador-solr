@@ -11,9 +11,9 @@
             <div class="mt-0 w-50">
                 <form class="d-flex w-auto" role="search" action="{{ url_for('search') }}" method="get">
                     <select required class="form-select rounded-5 w-auto" name="core" aria-label="Default select example">
-                        <option value="" selected>Banco de Questões</option>
-                        <option value="enem2019">Enem2019</option>
-                        <option value="outros">Outros</option>
+                        {% for attributes, text in options %}
+                          <option {{ attributes }}>{{ text }}</option>
+                        {% endfor %}
                     </select>
                     <input class="form-control mx-2 rounded-5 bg-transparent text-light" type="search" name="query" aria-label="Search" placeholder="campo:palavras-chave">
                     <button class="btn btn-outline-light rounded-5" type="submit">Buscar</button>

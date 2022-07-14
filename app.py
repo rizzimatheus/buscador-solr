@@ -16,6 +16,29 @@ MSG_SOLR_OFFLINE = "Solr está fora do ar."
 MSG_ERROR_DOWNLOAD = "Não foi possível fazer download."
 MSG_ERROR_CORE = "Não foi possível encontrar o Banco de Questões selecionado."
 
+options = [
+    ('selected value=',   'Banco de Questões'),
+    ('value=enem2020',    'Enem 2020'),
+    ('value=enem2019',    'Enem 2019'),
+    ('value=enem2018',    'Enem 2018'),
+    ('value=enem2017',    'Enem 2017'),
+    ('value=enem2016',    'Enem 2016'),
+    ('value=enem2016-p2', 'Enem 2016 - Segunda Aplicação'),
+    ('value=enem2015',    'Enem 2015'),
+    ('value=enem2015-p2', 'Enem 2015 - Segunda Aplicação'),
+    ('value=enem2014',    'Enem 2014'),
+    ('value=enem2014-p2', 'Enem 2014 - Segunda Aplicação'),
+    ('value=enem2013',    'Enem 2013'),
+    ('value=enem2013-p2', 'Enem 2013 - Segunda Aplicação'),
+    ('value=enem2012',    'Enem 2012'),
+    ('value=enem2012-p2', 'Enem 2012 - Segunda Aplicação'),
+    ('value=enem2011',    'Enem 2011'),
+    ('value=enem2011-p2', 'Enem 2011 - Segunda Aplicação'),
+    ('value=enem2010',    'Enem 2010'),
+    ('value=enem2009',    'Enem 2009'),
+    ('value=outros',      'Outros'),
+]
+
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = '000000000000'
 app.config['SECRET_KEY'] = os.environ.get("SOLR_FLASK_SECRET_KEY")
@@ -23,7 +46,7 @@ app.config['SECRET_KEY'] = os.environ.get("SOLR_FLASK_SECRET_KEY")
 
 @app.route('/', methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    return render_template("index.html", options=options)
 
 
 @app.route('/search', methods=["GET", "POST"])
@@ -69,8 +92,10 @@ def search():
     questions = message['response']['docs']
     if total > 0:
         for question in questions:
-            # Remove field '_version_'
-            question.pop("_version_", None)
+            to_pop = ['_version_', 'texto_completo']
+            for field in to_pop:
+                question.pop(field, None)
+
             # Retita conteúdos de [lista]
             for i in question:
                 if(len(question[i]) == 1):
@@ -86,6 +111,7 @@ def search():
                            per_page=per_page,
                            pagination=pagination,
                            total=total,
+                           options=options
                            )
 
 

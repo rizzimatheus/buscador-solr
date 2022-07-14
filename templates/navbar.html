@@ -7,9 +7,9 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <form class="d-flex w-50" role="search" action="{{ url_for('search') }}" method="get">
         <select required class="form-select rounded-5 w-auto mx-3" name="core" aria-label="Default select example">
-          <option value="" selected>Banco de Questões</option>
-          <option value="enem2019">Enem2019</option>
-          <option value="outros">Outros</option>
+          {% for attributes, text in options %}
+            <option {{ attributes }}>{{ text }}</option>
+          {% endfor %}
         </select>
         <input class="form-control me-2 rounded-5 bg-transparent text-light" type="search" placeholder="Buscar" name="query" aria-label="Search" value="{{ query }}">
         <button class="btn btn-outline-light rounded-5" type="submit">Buscar</button>

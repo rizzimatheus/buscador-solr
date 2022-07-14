@@ -14,39 +14,39 @@
         </div>
 
         {%for question in questions%}
-        <div class="d-flex justify-content-center">
-            <table class="tabelaResultados overflow-hidden my-4">
-            <tbody>
+            <div class="d-flex justify-content-center">
+                <table class="tabelaResultados overflow-hidden my-4">
+                <tbody>
 
-            {%for field in question%}
-                <tr>
-                    <td><b>{{ field }}:</b></td>
-                    <td><div style="max-height:250px; overflow: auto"><span class="" style="white-space: pre-line;">{{ question[field] }}</span></div></td>
-                </tr>
-            {%endfor%}
+                {%for field in question%}
+                    <tr>
+                        <td><b>{{ field }}:</b></td>
+                        <td><div style="max-height:250px; overflow: auto; white-space: pre-line;">{% autoescape off %}{{ question[field] }}{% endautoescape %}</div></td>
+                    </tr>
+                {%endfor%}
 
-            {% if "enem" in core %}
-                <tr>
-                    <td><b>Download:</b></td>
-                    <td><div>
-                        <form class="d-flex w-auto" role="search" action="{{ url_for('download_file') }}" method="get">
-                            <input type="hidden" name="core" value="{{ core }}">
-                            <input type="hidden" name="tx_gabarito" value="{{ question['tx_gabarito'] }}">
-                            <input type="hidden" name="doc_id" value="{{ question['id'] }}">
-                            <select required class="form-select rounded-5 w-auto form-select-sm me-2" name="format" aria-label="Formato para download">
-                                <option value="" selected>Formato</option>
-                                <option value="moodle">Moodle</option>
-                                <option value="classroom" disabled>Classroom</option>
-                            </select>
-                            <button class="btn btn-outline-light rounded-5 btn-sm" type="submit">Download</button>
-                        </form>
-                    </div></td>
-                </tr>
-            {% endif %}
+                {% if "enem" in core %}
+                    <tr>
+                        <td><b>Download:</b></td>
+                        <td><div>
+                            <form class="d-flex w-auto" role="search" action="{{ url_for('download_file') }}" method="get">
+                                <input type="hidden" name="core" value="{{ core }}">
+                                <input type="hidden" name="tx_gabarito" value="{{ question['tx_gabarito'] }}">
+                                <input type="hidden" name="doc_id" value="{{ question['id'] }}">
+                                <select required class="form-select rounded-5 w-auto form-select-sm me-2" name="format" aria-label="Formato para download">
+                                    <option value="" selected>Formato</option>
+                                    <option value="moodle">Moodle</option>
+                                    <option value="classroom" disabled>Classroom</option>
+                                </select>
+                                <button class="btn btn-outline-light rounded-5 btn-sm" type="submit">Download</button>
+                            </form>
+                        </div></td>
+                    </tr>
+                {% endif %}
 
-            </tbody>
-            </table>
-        </div>
+                </tbody>
+                </table>
+            </div>
 
 {#        <div class="d-flex justify-content-center mt-2 mb-2">#}
 {#            {% if "enem" in core %}#}
